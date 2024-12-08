@@ -1,0 +1,12 @@
+apiVersion: compute.openstack.crossplane.io/v1alpha1
+kind: KeypairV2
+metadata:
+  labels:
+    crossplane-demo/openstack: keypair
+  name: openstack-demo-keypair
+spec:
+  forProvider:
+    name: openstack-demo-keypair
+    publicKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDtx5HJLfRAV4XfLMV2n9OtyaC9hm+N/I8qx8ghJLnH+9poj/iNeo0FebbSj5ND+YB2CEZn2mVhQizargjxfmpmZVhkmiVEkay7lIayl9wXBae0wyydULUNvw8Npd2y8NFRmIvfEZL0Phu6POiwnB43HqeRT3+ibn7zSXu2ESX5l3dTLgJUmV4TPzPt6mQoxCNXGMby3QWmQm92+RpmLrDufBxen3meZUF0iRKn4bogq6IoglpvBshSSRNs2ZILmXuVSkmLBHd2zlj3fWKMeP826t0zRY+u3nIYpxet1S9820tRzxBIb7e9PbSz9RrFQoXWI/oU8LmRx7faNzShyA+F Generated-by-Nova
+  providerConfigRef:
+    name: provider-config-openstack

@@ -1,0 +1,48 @@
+# Setup
+
+### [Install Crossplane](https://docs.crossplane.io/latest/software/install/)
+```bash
+helm repo add crossplane-stable https://charts.crossplane.io/stable
+helm repo update
+helm install crossplane \
+--namespace crossplane-system \
+--create-namespace crossplane-stable/crossplane 
+```
+
+### [Install a common config for providers that enables logs](https://docs.crossplane.io/latest/guides/troubleshoot-crossplane/#provider-logs)
+ControllerConfig has been deprecated, replace it with [DeploymentRuntimeConfig](https://docs.crossplane.io/latest/concepts/providers/#runtime-configuration).
+```bash
+kubectl apply -f deployment-runtime-config-debug.yaml
+```
+
+### [Install Openstack provider](https://github.com/crossplane-contrib/provider-openstack?tab=readme-ov-file#getting-started)
+```bash
+kubectl apply -f provider-openstack.yaml
+```
+
+### [Configure Openstack provider](https://github.com/crossplane-contrib/provider-openstack?tab=readme-ov-file#configuration)
+Create `openstack-auth-config.json` in the current directory, provide data necessary to authenticate. \
+Supported fields can be found in the [source code](https://github.com/crossplane-contrib/provider-openstack/blob/main/internal/clients/openstack.go), check explanation of their roles in the [Terraform docs](https://registry.terraform.io/providers/terraform-provider-openstack/openstack/latest/docs#configuration-reference). \
+I recommend to attempt to reproduce your Openstack RC File's configuration, for example:
+```json
+{
+  "auth_url": "",
+  "tenant_id": "",
+  "user_domain_name": "",
+  "region": "",
+  "user_name": "",
+  "password": "",
+  "insecure": ""
+}
+```
+Authentication can be configured differently on the Openstack's end so the required fields may differ.
+
+Create an auth Secret.
+```bash
+kubectl --namespace crossplane-system create secret generic openstack-auth-config --from-file=config=openstack-auth-config.json
+```
+
+Create a ProviderConfig which points to the auth Secret.
+```bash
+kubectl apply -f provider-config-openstack.yaml
+```
