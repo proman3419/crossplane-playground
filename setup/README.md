@@ -63,3 +63,16 @@ Create a ProviderConfig which points to the `kubeconfig` Secret.
 ```bash
 kubectl apply -f provider-config-kubernetes.yaml
 ```
+
+### Install [microservices-demo](https://github.com/GoogleCloudPlatform/microservices-demo)
+```bash
+cd /tmp
+git clone git@github.com:GoogleCloudPlatform/microservices-demo.git
+kubectl create ns microservices-demo
+kubectl -n microservices-demo apply -f microservices-demo/release/kubernetes-manifests.yaml
+```
+
+Verify that it is running.
+```bash
+kubectl -n microservices-demo port-forward svc/frontend 8080:80
+```
