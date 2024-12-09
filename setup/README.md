@@ -46,3 +46,20 @@ Create a ProviderConfig which points to the auth Secret.
 ```bash
 kubectl apply -f provider-config-openstack.yaml
 ```
+
+### [Install Kubernetes provider](https://github.com/crossplane-contrib/provider-kubernetes?tab=readme-ov-file#install)
+```bash
+kubectl apply -f provider-kubernetes.yaml
+```
+
+### [Configure Kubernetes provider](https://github.com/crossplane-contrib/provider-kubernetes/blob/main/examples/provider/config.yaml)
+Create `kubeconfig` Secret.
+```bash
+KUBECONFIG_PATH=~/.kube/config
+kubectl --namespace crossplane-system create secret generic kubeconfig --from-file=kubeconfig=$KUBECONFIG_PATH
+```
+
+Create a ProviderConfig which points to the `kubeconfig` Secret.
+```bash
+kubectl apply -f provider-config-kubernetes.yaml
+```
