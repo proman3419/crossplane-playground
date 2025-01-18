@@ -64,15 +64,17 @@ Create a ProviderConfig which points to the `kubeconfig` Secret.
 kubectl apply -f provider-config-kubernetes.yaml
 ```
 
-### Install [microservices-demo](https://github.com/GoogleCloudPlatform/microservices-demo)
+### Install [dummy-message-service](https://github.com/proman3419/dummy-message-service)
 ```bash
 cd /tmp
-git clone git@github.com:GoogleCloudPlatform/microservices-demo.git
-kubectl create ns microservices-demo
-kubectl -n microservices-demo apply -f microservices-demo/release/kubernetes-manifests.yaml
+git clone git@github.com:proman3419/dummy-message-service.git
+kubectl apply -f deploy.yaml
 ```
 
 Verify that it is running.
 ```bash
-kubectl -n microservices-demo port-forward svc/frontend 8080:80
+kubectl -n dummy-message-service port-forward svc/dummy-message-service-svc 8000:8000
 ```
+
+### Install and configure [provider-dummy-message-service](https://github.com/proman3419/provider-dummy-message-service)
+Steps in the README.
