@@ -1,0 +1,16 @@
+apiVersion: compute.openstack.crossplane.io/v1alpha1
+kind: InstanceV2
+metadata:
+  name: crossplane-playground-openstack-instance-mr
+spec:
+  forProvider:
+    flavorId: f2559863-ef7d-416c-907e-4ea4043d4831
+    imageId: 5e7f4d9d-0ce0-4ef9-96c8-67ee5693cfa0
+    keyPairSelector:
+      matchLabels:
+        name: crossplane-playground-openstack-keypair-mr
+    name: crossplane-playground-openstack-instance-er
+    network:
+    - name: ii-executor-network
+  providerConfigRef:
+    name: provider-config-openstack
