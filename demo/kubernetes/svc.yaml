@@ -1,0 +1,21 @@
+apiVersion: kubernetes.crossplane.io/v1alpha2
+kind: Object
+metadata:
+  name: crossplane-playground-kubernetes-svc-mr
+spec:
+  forProvider:
+    manifest:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: crossplane-playground-kubernetes-svc-er
+        namespace: crossplane-playground-kubernetes-ns-er
+      spec:
+        ports:
+        - name: app-port
+          port: 8000
+          protocol: TCP
+        selector:
+          name: crossplane-playground-kubernetes-pod-er
+  providerConfigRef:
+    name: provider-config-kubernetes

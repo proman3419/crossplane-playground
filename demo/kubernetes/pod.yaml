@@ -1,0 +1,39 @@
+apiVersion: kubernetes.crossplane.io/v1alpha2
+kind: Object
+metadata:
+  name: crossplane-playground-kubernetes-pod-mr
+spec:
+  forProvider:
+    manifest:
+      apiVersion: v1
+      kind: Pod
+      metadata:
+        name: crossplane-playground-kubernetes-pod-er
+        namespace: crossplane-playground-kubernetes-ns-er
+        labels:
+          name: crossplane-playground-kubernetes-pod-er
+      spec:
+        containers:
+        - name: python-container
+          ports:
+            - containerPort: 8000
+          image: python:latest
+          imagePullPolicy: "IfNotPresent"
+          command: ["/bin/sh", "-c"]
+          args: [
+            "cd /app && pip install -r requirements.txt && fastapi run main.py --port 8000 && tail -f /dev/null"
+          ]
+          volumeMounts:
+          - name: app-volume
+            mountPath: /app
+        volumes:
+        - name: app-volume
+          configMap:
+            name: crossplane-playground-kubernetes-cm-er
+            items:
+              - key: requirements.txt
+                path: requirements.txt
+              - key: main.py
+                path: main.py
+  providerConfigRef:
+    name: provider-config-kubernetes
